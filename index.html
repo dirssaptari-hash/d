@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>नेपालको इतिहास क्विज</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f9; }
+        .quiz-container { max-width: 650px; margin: 0 auto; background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h2 { color: #333; font-size: 1.25rem; margin-bottom: 15px; }
+        .option-btn { display: block; width: 100%; margin: 10px 0; padding: 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; background: #fff; cursor: pointer; text-align: left; transition: background 0.2s; }
+        .option-btn:hover { background-color: #f0f0f0; }
+        .correct { background-color: #76ff03 !important; font-weight: bold; border-color: #52b202; }
+        .wrong { background-color: #ff5252 !important; color: white; border-color: #c62828; }
+        #next-btn { display: none; margin-top: 20px; padding: 12px 25px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        #next-btn:hover { background-color: #0056b3; }
+        .progress { font-size: 0.9rem; color: #666; margin-bottom: 10px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div id="progress" class="progress"></div>
+    <div id="quiz"></div>
+    <button id="next-btn" onclick="nextQuestion()">अर्को प्रश्न (Next Question) &rarr;</button>
+</div>
+
+<script>
+    const questions = [
+        {
+            question: "१. द्वापर युगमा नेपाललाई के भनिन्थ्यो ?",
+            options: ["मुक्तिसोपान", "सत्यवती", "तपोवन", "नेपाल"],
+            answer: 0
+        },
+        {
+            question: "२. काठमाडौँ उपत्यकाको पानी आउने निकासको लागि चोभारको गल्छी कसले काटेका हुन् भन्ने गरिन्छ ?",
+            options: ["भुवन सिंह", "जितेदास्ता", "सुपुष्प देव", "मञ्जुश्री"],
+            answer: 3
+        },
+        {
+            question: "३. सर्वप्रथम नेपालमा कुन वंशका राजाहरूले राज्य गरेका थिए ?",
+            options: ["गोपाल वंश", "सोम वंश", "किरात वंश", "लिच्छवी वंश"],
+            answer: 0
+        },
+        {
+            question: "४. नेपालको इतिहास अनुसार देहायका मध्ये कुन समुदायका मानिसलाई गोपालवंशी भन्ने प्रचलन रहेको छ ?",
+            options: ["खेती किसानी गर्ने समुदाय", "गाईपालक समुदाय", "माछा मार्ने समुदाय", "घुमन्ते समुदाय"],
+            answer: 1
+        },
+        {
+            question: "५. गोपाल वंशको राजधानी कहाँ थियो ?",
+            options: ["काभ्रेको साखू", "काभ्रेको पनौती", "काठमाडौँको मातातीर्थ", "ललितपुरको कुपण्डोल"],
+            answer: 2
+        },
+        {
+            question: "६. गोपाल वंशका पहिलो राजा को थिए ?",
+            options: ["अहीर", "गडदेव", "भुक्तमान", "भुवन सिंह"],
+            answer: 2
+        },
+        {
+            question: "७. नेपालमा महिषपाल वंशले कति वर्ष शासन गरे ?",
+            options: ["१११ वर्ष", "१२१ वर्ष", "५२१ वर्ष", "१५०० वर्ष"],
+            answer: 0
+        },
+        {
+            question: "८. ललितपुरको पाटन सहरको पुरानो नाम \"यल\" कुन किरात राजाको नामबाट रहन गएको हो ?",
+            options: ["यलम्बर", "यलमाया", "हुमती", "स्थुंक"],
+            answer: 0
+        },
+        {
+            question: "९. तलका मध्ये कुन भनाइ सही हो ?",
+            options: ["किरात कालको राजधानी शंखमूल थियो।", "किरात राजा गस्तीको पालामा सम्राट अशोक काठमाडौँ आएका थिए।", "किरात राजाहरू मूलतः वैष्णव धर्मावलम्बी थिए।", "किरात राजा यलम्बरले पशुपतिनाथको मन्दिर बनाएका थिए।"],
+            answer: 0
+        },
+        {
+            question: "१०. नेपालको किरातकालीन शासन व्यवस्था सम्बन्धी भनाइ अध्ययन गरी सही विकल्प छान्नुहोस्:<br>क. वर्ण व्यवस्था सुरुवात भइसकेको थिएन।<br>ख. संस्कृत मूल भाषाको रूपमा प्रयोग गरिन्थ्यो।",
+            options: ["क मात्र सही", "ख मात्र सही", "क र ख दुवै सही", "क र ख दुवै गलत"],
+            answer: 2
+        },
+        {
+            question: "११. नेपालका अन्तिम किराती राजा को थिए ?",
+            options: ["भूपति", "यलम्बर", "गस्ती", "जितेदास्ती"],
+            answer: 2
+        },
+        {
+            question: "१२. किरात शासनपछि नेपालमा कुन वंशका राजाहरूको शासन रहन गयो ?",
+            options: ["सोमवंशी", "गोपालवंशी", "लिच्छवीवंशी", "मल्लवंशी"],
+            answer: 0
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+
+    function loadQuestion() {
+        document.getElementById("next-btn").style.display = "none";
+        const q = questions[currentQuestionIndex];
+        
+        document.getElementById("progress").innerText = `प्रश्न ${currentQuestionIndex + 1} / ${questions.length}`;
+        
+        let html = `<h2>${q.question}</h2>`;
+
+        q.options.forEach((opt, index) => {
+            html += `<button class="option-btn" onclick="checkAnswer(${index}, ${q.answer})">${opt}</button>`;
+        });
+
+        document.getElementById("quiz").innerHTML = html;
+    }
+
+    function checkAnswer(selectedIndex, correctIndex) {
+        const buttons = document.querySelectorAll(".option-btn");
+        buttons.forEach((btn, idx) => {
+            btn.disabled = true;
+            if (idx === correctIndex) {
+                btn.classList.add("correct");
+            } else if (idx === selectedIndex) {
+                btn.classList.add("wrong");
+            }
+        });
+        
+        if (currentQuestionIndex < questions.length - 1) {
+            document.getElementById("next-btn").style.display = "inline-block";
+        } else {
+            document.getElementById("quiz").innerHTML += "<h2 style='color: #28a745; margin-top:20px;'>🎉 क्विज समाप्त भयो! बधाई छ!</h2>";
+        }
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        loadQuestion();
+    }
+
+    loadQuestion();
+</script>
+
+</body>
+</html>
